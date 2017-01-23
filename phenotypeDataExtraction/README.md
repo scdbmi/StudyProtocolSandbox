@@ -30,7 +30,7 @@ workFolder <- 'c:/temp/phenoDE'  #create a folder where data will be exported
 dir.create(workFolder) 
 
 
- connectionDetails<-connDlee4
+
 cdm<-'cdm.dbo'
 results<-'cdm.dbo'
 
