@@ -52,6 +52,8 @@ execute <- function(connectionDetails,
                     cdm,
                     results,
                     workFolder,
+                    ncnt = 450,
+                    mcnt = 450,
                     oracleTempSchema = results,
                     ...) {
 
@@ -74,7 +76,8 @@ execute <- function(connectionDetails,
                                              dbms = connectionDetails$dbms,
                                              oracleTempSchema = oracleTempSchema,
                                              cdm = cdm,
-                                             results = results
+                                             results = results,
+                                             mcnt=mcnt,ncnt=ncnt
                                              )
     DatabaseConnector::executeSql(conn, sql)
 

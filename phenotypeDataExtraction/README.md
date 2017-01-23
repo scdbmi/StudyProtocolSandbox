@@ -35,6 +35,6 @@ cdm<-'cdm.dbo'
 results<-'cdm.dbo'
 
 
-execute(connectionDetails = connectionDetails,cdm = cdm,results = results,workFolder = workFolder)
+execute(connectionDetails = connectionDetails,cdm = cdm,results = results,workFolder = workFolder,ncnt=100,mcnt=50)
 
 ```
