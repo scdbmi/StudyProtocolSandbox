@@ -1,6 +1,6 @@
-#' SkeletonStudy.
+#' phenotypeDataExtraction.
 #'
-#' @name SkeletonStudy
+#' @name phenotypeDataExtraction
 #' @docType package
 #' @import DBI
 #' @import SqlRender

@@ -112,7 +112,7 @@ execute <- function(connectionDetails,
 
     # Clean up
     DBI::dbDisconnect(conn)
-    writeLines('All done')
+    writeLines(paste('All done. Extracts can be found in ',workFolder))
 
     # Package and return result if return value is used
     result <- mget(objectsToSave)

@@ -1,12 +1,12 @@
 #PhenotypeDataExtraction
 
 This R package generates data extracts necessary for a Phenotype Study (by a team at Columbia U).
-Such extracts are later analyzed on a second step (not part of this package).
+Such extracts are later analyzed in a second step (not part of this package).
 
 
 
 ##Step 1.
-Install the package.  The --no-multiarch eliminates errors on some Windows computers (it is not always necessar). 
+Install the package.  The --no-multiarch eliminates errors on some Windows computers (it is not always necessary). 
 
 ```R
 install.packages("devtools")
@@ -17,7 +17,8 @@ library(phenotypeDataExtraction)
 ```
 
 ##Step 2. 
-Execute the following code:
+Execute the following code.
+To understand the CDM and results schemas, see here:http://www.ohdsi.org/web/wiki/doku.php?id=development:data_architecture
 
 ```R
 #use your previous connectionDetails object with username and psw for database
@@ -29,7 +30,7 @@ workFolder <- 'c:/temp/phenoDE'  #create a folder where data will be exported
 dir.create(workFolder) 
 
 
-#provide names of your CDM and results schemas (see http://www.ohdsi.org/web/wiki/doku.php?id=development:data_architecture ) 
+#provide names of your CDM and results schemas 
 cdm<-'cdm.dbo'
 results<-'cdm.dbo'
 
