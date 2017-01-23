@@ -1,4 +1,4 @@
-#' @title Execute OHDSI Study (FILL IN NAME)
+#' @title Execute OHDSI Study phenotypeDataExtraction
 #'
 #' @details
 #' This function executes OHDSI Study (FILL IN NAME).
@@ -48,19 +48,13 @@
 #'
 #' @importFrom DBI dbDisconnect
 #' @export
-execute <- function(dbms, user = NULL, domain = NULL, password = NULL, server,
-                    port = NULL,
-                    cdmSchema, resultsSchema,
-                    file = getDefaultStudyFileName(),
+execute <- function(connectionDetails,
+                    cdm,
+                    results,
+                    workFolder,
+                    oracleTempSchema = results,
                     ...) {
-    # Open DB connection
-    connectionDetails <- DatabaseConnector::createConnectionDetails(dbms=dbms,
-                                                                    server=server,
-                                                                    user=user,
-                                                                    domain=domain,
-                                                                    password=password,
-                                                                    schema=cdmSchema,
-                                                                    port = port)
+
     conn <- DatabaseConnector::connect(connectionDetails)
     if (is.null(conn)) {
         stop("Failed to connect to db server.")
@@ -70,22 +64,55 @@ execute <- function(dbms, user = NULL, domain = NULL, password = NULL, server,
     start <- Sys.time()
 
     # Place execution code here
-	result <- 42
+    #execute one extract here
+
+
+
+    writeLines("- Creating cohort")
+    sql <- SqlRender::loadRenderTranslateSql("GenerateRandomTestPatientList.sql",
+                                             "phenotypeDataExtraction",
+                                             dbms = connectionDetails$dbms,
+                                             oracleTempSchema = oracleTempSchema,
+                                             cdm = cdm,
+                                             results = results
+                                             )
+    DatabaseConnector::executeSql(conn, sql)
+
+
+    writeLines("- Extracting Conditions")
+
+    sql <- SqlRender::loadRenderTranslateSql("ExtractConditionsRandom.sql","phenotypeDataExtraction",
+                                             dbms = connectionDetails$dbms,oracleTempSchema = oracleTempSchema,
+                                             cdm = cdm,results = results
+    )
+    conditions<-DatabaseConnector::querySql(conn, sql)
+    write.csv(conditions,file.path(workFolder,'conditions.csv'),row.names = F)
+
+
+
+
+
+
+
+
+	result <- 1
 
     # Execution duration
     executionTime <- Sys.time() - start
 
-    # List of R objects to save
-    objectsToSave <- c(
-    	"result",
-        "executionTime"
-    	)
+    # # List of R objects to save
+     objectsToSave <- c(
+     	"result",
+         "executionTime"
+     	)
 
-    # Save results to disk
-    saveOhdsiStudy(list = objectsToSave, file = file)
+    # # Save results to disk
+    # saveOhdsiStudy(list = objectsToSave, file = file)
+
 
     # Clean up
     DBI::dbDisconnect(conn)
+    writeLines('All done')
 
     # Package and return result if return value is used
     result <- mget(objectsToSave)
@@ -93,14 +120,3 @@ execute <- function(dbms, user = NULL, domain = NULL, password = NULL, server,
     invisible(result)
 }
 
-# Package must provide a default gmail address to receive result files
-#' @keywords internal
-getDestinationAddress <- function() { return("nobody@gmail.com") }
-
-# Package must provide a default result file name
-#' @keywords internal
-getDefaultStudyFileName <- function() { return("OhdsiStudy.rda") }
-
-# Packge must provide default email subject
-#' @keywords internal
-getDefaultStudyEmailSubject <- function() { return("OHDSI Study Results") }

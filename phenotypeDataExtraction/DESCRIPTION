@@ -8,9 +8,9 @@ Depends:
     DatabaseConnector (>= 1.2.1)
 Imports:
     SqlRender,
-    DBI,
-    mailR
+    DBI
 Suggests:
     testthat
 License: Apache License 2.0
 LazyData: true
+RoxygenNote: 5.0.1
