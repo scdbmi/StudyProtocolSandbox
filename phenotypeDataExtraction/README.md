@@ -1,9 +1,7 @@
 #PhenotypeDataExtraction
 
-This is part of a study. It allows generation of data extracts from CDM shaped data.
-Such extracts are later analyzed on a second step.
-
-
+This R package generates data extracts necessary for a Phenotype Study (by a team at Columbia U).
+Such extracts are later analyzed on a second step (not part of this package).
 
 
 
@@ -18,7 +16,7 @@ library(phenotypeDataExtraction)
 
 ```
 
-##Step 3. 
+##Step 2. 
 Execute the following code:
 
 ```R
@@ -26,11 +24,12 @@ Execute the following code:
 #or get it from an external file 
 source('c:/r/conn.R')  #this file should create an object called connectionDetails
 
+#create a work folder
 workFolder <- 'c:/temp/phenoDE'  #create a folder where data will be exported
 dir.create(workFolder) 
 
 
-
+#provide names of your CDM and results schemas (see http://www.ohdsi.org/web/wiki/doku.php?id=development:data_architecture ) 
 cdm<-'cdm.dbo'
 results<-'cdm.dbo'
 
