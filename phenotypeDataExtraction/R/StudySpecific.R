@@ -85,8 +85,16 @@ execute <- function(connectionDetails,
                                              dbms = connectionDetails$dbms,oracleTempSchema = oracleTempSchema,
                                              cdm = cdm,results = results
     )
-    conditions<-DatabaseConnector::querySql(conn, sql)
-    write.csv(conditions,file.path(workFolder,'conditions.csv'),row.names = F)
+    conditions_nr<-DatabaseConnector::querySql(conn, sql)
+    write.csv(conditions_nr,file.path(workFolder,'Randomsample_cond.csv'),row.names = F)
+
+
+    sql <- SqlRender::loadRenderTranslateSql("ExtractConditionsSeed.sql","phenotypeDataExtraction",
+                                             dbms = connectionDetails$dbms,oracleTempSchema = oracleTempSchema,
+                                             cdm = cdm,results = results
+    )
+    conditions_ms<-DatabaseConnector::querySql(conn, sql)
+    write.csv(conditions_ms,file.path(workFolder,'Seedpatients_cond.csv'),row.names = F)
 
 
 

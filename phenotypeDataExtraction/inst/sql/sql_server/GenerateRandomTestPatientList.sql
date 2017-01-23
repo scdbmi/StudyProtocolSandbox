@@ -19,6 +19,9 @@
 
 {DEFAULT @cdm = 'cdm'}
 {DEFAULT @results = 'results'}
+{DEFAULT @ncnt = 500}
+{DEFAULT @mcnt = 500}
+
 
 IF OBJECT_ID('@results.phenode_n', 'U') IS NOT NULL
   DROP TABLE @results.phenode_n;
@@ -33,10 +36,32 @@ select person_id,rnk from (
         SELECT DISTINCT person_id, DENSE_RANK() OVER (order by person_id) as rnk
           /* Enter appropriate OMOP data table name below*/
           FROM @cdm.person
+          --WHERE person_id NOT in (1 ) --TODO fix
+  ) U
+  /* Enter appropriate number of testing patients, n below.
+   We have used 30,000 in our experiments and hence have retained that number here */
+  WHERE rnk <= @ncnt
+  order by rnk
+;
+
+
+IF OBJECT_ID('@results.phenode_m', 'U') IS NOT NULL
+  DROP TABLE @results.phenode_n;
+
+CREATE TABLE @results.phenode_m (
+  person_id INT,
+  rnk INT
+);
+
+insert into @results.phenode_m (person_id,rnk)
+select person_id,rnk from (
+        SELECT DISTINCT person_id, DENSE_RANK() OVER (order by person_id) as rnk
+          /* Enter appropriate OMOP data table name below*/
+          FROM @cdm.person
           WHERE person_id NOT in (1 ) --TODO fix
   ) U
   /* Enter appropriate number of testing patients, n below.
    We have used 30,000 in our experiments and hence have retained that number here */
-  WHERE rnk <=30000
-  order by rnk
+  WHERE rnk <= @mcnt
+  order by rnk desc
 ;

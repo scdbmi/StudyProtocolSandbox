@@ -26,7 +26,7 @@ SELECT DISTINCT person_id
   /* Enter appropriate OMOP data table name below*/
   FROM @cdm.condition_occurrence
   WHERE
-    person_id in( select person_id from @results.phenode_n)
+    person_id in( select person_id from @results.phenode_m)
   /* Insert list of test patients in the following format for n test patients*/
   /*'MRNt1','MRNt2',...'MRNtn'*/
 
