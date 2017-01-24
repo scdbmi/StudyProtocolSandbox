@@ -4,65 +4,20 @@
 \alias{execute}
 \title{Execute OHDSI Study phenotypeDataExtraction}
 \usage{
-execute(connectionDetails, cdm, results, workFolder,
+execute(connectionDetails, cdm, results, workFolder, ncnt = 450, mcnt = 450,
   oracleTempSchema = results, ...)
 }
 \arguments{
-\item{...}{(FILL IN) Additional properties for this specific study.}
+\item{cdm}{Schema name where your patient-level data in OMOP CDM format resides}
 
-\item{dbms}{The type of DBMS running on the server. Valid values are
-\itemize{
-  \item{"mysql" for MySQL}
-  \item{"oracle" for Oracle}
-  \item{"postgresql" for PostgreSQL}
-  \item{"redshift" for Amazon Redshift}
-  \item{"sql server" for Microsoft SQL Server}
-  \item{"pdw" for Microsoft Parallel Data Warehouse (PDW)}
-  \item{"netezza" for IBM Netezza}
-}}
-
-\item{user}{The user name used to access the server. If the user is not specified for SQL Server,
-Windows Integrated Security will be used, which requires the SQL Server JDBC drivers
-to be installed.}
-
-\item{domain}{(optional) The Windows domain for SQL Server only.}
-
-\item{password}{The password for that user}
-
-\item{server}{The name of the server}
-
-\item{port}{(optional) The port on the server to connect to}
-
-\item{cdmSchema}{Schema name where your patient-level data in OMOP CDM format resides}
-
-\item{resultsSchema}{(Optional) Schema where you'd like the results tables to be created (requires user to have create/write access)}
-
-\item{file}{(Optional) Name of local file to place results; makre sure to use forward slashes (/)}
+\item{results}{Schema where you'd like the results tables to be created (requires user to have create/write access)}
 }
 \value{
-Study results are placed in CSV format files in specified local folder and returned
-as an R object class \code{OhdsiStudy} when sufficiently small.  The properties of an
-\code{OhdsiStudy} may differ from study to study.
+Study results are in folder
 }
 \details{
 This function executes OHDSI Study (FILL IN NAME).
 This is a study of (GIVE SOME DETAILS).
 Detailed information and protocol are available on the OHDSI Wiki.
-}
-\examples{
-\dontrun{
-# Run study
-execute(dbms = "postgresql",
-        user = "joebruin",
-        password = "supersecret",
-        server = "myserver",
-        cdmSchema = "cdm_schema",
-        resultsSchema = "results_schema")
-
-# Email result file
-email(from = "collaborator@ohdsi.org",
-      dataDescription = "CDM4 Simulated Data")
-}
-
 }
 
