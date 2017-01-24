@@ -25,7 +25,7 @@
 SELECT DISTINCT person_id
       ,procedure_concept_id
   /* Enter appropriate OMOP data table name below*/
-  FROM @cdm.procedure_occurence
+  FROM @cdm.procedure_occurrence
   WHERE
     person_id in( select person_id from @results.phenode_n)
   /* @results.phenode_n is the handle for the list of n test patients*/
